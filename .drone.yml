@@ -11,10 +11,12 @@ node_selector:
   doks.digitalocean.com/node-pool: josa-cloud-np
 
 steps:
-  - name: clone
+  - name: submodules
     image: plugins/git
     settings:
       submodule_update_remote: true
+    commands:
+      - git submodule update --init
   - name: build
     image: plugins/docker
     settings:
