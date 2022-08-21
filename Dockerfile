@@ -65,7 +65,7 @@ ENV SECRET_KEY=ChangeMe \
 EXPOSE 3000
 
 RUN mkdir -p /run/nginx/
-RUN touch /usr/src/supervisord.log && chmod 777 /usr/src/supervisord.log
+RUN touch /app/supervisord.log && chmod 777 /app/supervisord.log
 COPY supervisord.conf /etc/supervisord.conf
 COPY nginx.conf /etc/nginx/nginx.conf
 
