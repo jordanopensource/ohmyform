@@ -11,6 +11,10 @@ node_selector:
   doks.digitalocean.com/node-pool: josa-cloud-np
 
 steps:
+  - name: clone
+    image: plugins/git
+    settings:
+      submodule_update_remote: true
   - name: build
     image: plugins/docker
     settings:
@@ -22,9 +26,6 @@ steps:
         from_secret: docker_username
       password:
         from_secret: docker_password
-    commands:
-      - git submodule update --init
-      - git submodule update --init --recursive
   - name: notify
     image: plugins/slack
     settings:
