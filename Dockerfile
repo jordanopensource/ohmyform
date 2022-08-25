@@ -49,23 +49,23 @@ FROM node:16-alpine
 
 RUN apk --update add supervisor nginx && rm -rf /var/cache/apk/*
 
-WORKDIR /usr/src
+WORKDIR /app
 
-COPY --from=api /usr/src/api /usr/src/api
-COPY --from=ui /usr/src/ui /usr/src/ui
+COPY --from=api /usr/src/api /app/api
+COPY --from=ui /usr/src/ui /app/ui
 
 RUN addgroup --gid 9999 ohmyform && adduser -D --uid 9999 -G ohmyform ohmyform
 ENV SECRET_KEY=ChangeMe \
-    CREATE_ADMIN=FALSE \
-    ADMIN_EMAIL=admin@ohmyform.com \
-    ADMIN_USERNAME=root \
-    ADMIN_PASSWORD=root \
-    NODE_ENV=production
+  CREATE_ADMIN=FALSE \
+  ADMIN_EMAIL=admin@ohmyform.com \
+  ADMIN_USERNAME=root \
+  ADMIN_PASSWORD=root \
+  NODE_ENV=production
 
 EXPOSE 3000
 
 RUN mkdir -p /run/nginx/
-RUN touch /usr/src/supervisord.log && chmod 777 /usr/src/supervisord.log
+RUN touch /app/supervisord.log && chmod 777 /app/supervisord.log
 COPY supervisord.conf /etc/supervisord.conf
 COPY nginx.conf /etc/nginx/nginx.conf
 
